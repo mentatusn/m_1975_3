@@ -44,7 +44,6 @@ class SettingsFragment : Fragment() {
             Toast.makeText(context, "setOnClickListener", Toast.LENGTH_SHORT).show()
         }
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->  }
-        
     }
 
     override fun onDestroy() {
