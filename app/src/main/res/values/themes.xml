@@ -22,10 +22,14 @@
         <item name="materialButtonStyle">@style/MyButtonStyle</item>
         <item name="textInputStyle">@style/MyInputStyle</item>
         <item name="bottomAppBarStyle">@style/MyBottomAppBarStyle</item>
+        <item name="chipStyle">@style/MyChipStyle</item>
     </style>
 
     <style name="MyBottomAppBarStyle" parent="Widget.MaterialComponents.BottomAppBar.Colored">
         <item name="backgroundTint">@color/red_100</item>
+    </style>
+    <style name="MyChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+
     </style>
 
     <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button">

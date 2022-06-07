@@ -14,6 +14,7 @@ import coil.load
 import com.gb.m_1975_3.R
 import com.gb.m_1975_3.databinding.FragmentPictureOfTheDayBinding
 import com.gb.m_1975_3.view.MainActivity
+import com.gb.m_1975_3.view.settings.SettingsFragment
 import com.gb.m_1975_3.viewmodel.AppState
 import com.gb.m_1975_3.viewmodel.PictureOfTheDayViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -52,9 +53,10 @@ class PictureOfTheDayFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.app_bar_fav -> Toast.makeText(context, "Favourite", Toast.LENGTH_SHORT).show()
-            R.id.app_bar_settings -> Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show()
-            android.R.id.home->{
-                BottomNavigationDrawerFragment().show(requireActivity().supportFragmentManager,"")
+            R.id.app_bar_settings -> requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.container,SettingsFragment.newInstance()).commit()
+            android.R.id.home -> {
+                BottomNavigationDrawerFragment().show(requireActivity().supportFragmentManager, "")
             }
         }
         return super.onOptionsItemSelected(item)
@@ -84,18 +86,18 @@ class PictureOfTheDayFragment : Fragment() {
         behavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                 when(newState){
-                  /*   BottomSheetBehavior.STATE_DRAGGING -> TODO("not implemented")
-                     BottomSheetBehavior.STATE_COLLAPSED -> TODO("not implemented")
-                     BottomSheetBehavior.STATE_EXPANDED -> TODO("not implemented")
-                     BottomSheetBehavior.STATE_HALF_EXPANDED -> TODO("not implemented")
-                     BottomSheetBehavior.STATE_HIDDEN -> TODO("not implemented")
-                     BottomSheetBehavior.STATE_SETTLING -> TODO("not implemented")*/
-                 }
+                when (newState) {
+                    /*   BottomSheetBehavior.STATE_DRAGGING -> TODO("not implemented")
+                       BottomSheetBehavior.STATE_COLLAPSED -> TODO("not implemented")
+                       BottomSheetBehavior.STATE_EXPANDED -> TODO("not implemented")
+                       BottomSheetBehavior.STATE_HALF_EXPANDED -> TODO("not implemented")
+                       BottomSheetBehavior.STATE_HIDDEN -> TODO("not implemented")
+                       BottomSheetBehavior.STATE_SETTLING -> TODO("not implemented")*/
+                }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                Log.d("@@@","$slideOffset slideOffset")
+                Log.d("@@@", "$slideOffset slideOffset")
             }
 
         })
@@ -105,16 +107,30 @@ class PictureOfTheDayFragment : Fragment() {
             if (!isMain) {
                 binding.bottomAppBar.navigationIcon = null
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-                binding.fab.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_back_fab))
+                binding.fab.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_back_fab
+                    )
+                )
                 binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar_other)
             } else {
                 binding.bottomAppBar.navigationIcon =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_hamburger_menu_bottom_bar)
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_hamburger_menu_bottom_bar
+                    )
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-                binding.fab.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_plus_fab))
+                binding.fab.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_plus_fab
+                    )
+                )
                 binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar)
             }
         }
+
 
     }
 
@@ -131,7 +147,7 @@ class PictureOfTheDayFragment : Fragment() {
                 binding.imageView.load(appState.serverResponseData.hdurl) {
                     // TODO HW placehilde+error+transform
                 }
-                binding.lifeHack.title.text =   appState.serverResponseData.title
+                binding.lifeHack.title.text = appState.serverResponseData.title
                 // TODO HW appState.serverResponseData.explanation
             }
         }
