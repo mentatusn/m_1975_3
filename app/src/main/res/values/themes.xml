@@ -13,10 +13,15 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="materialButtonStyle">@style/MyButtonStyle</item>
+        <item name="textInputStyle">@style/MyInputStyle</item>
     </style>
 
     <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">#0EFF0E</item>
         <item name="android:insetTop">100dp</item>
+    </style>
+
+    <style name="MyInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">#0EFF0E</item>
     </style>
 </resources>
