@@ -11,5 +11,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="today">today</string>
     <string name="yesterday">yesterday</string>
+    <string name="thedaybeforeyesterday">TDBY</string>
 
 </resources>
