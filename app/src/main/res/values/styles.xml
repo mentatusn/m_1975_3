@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="MyTextAppearance" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/aguafina_script</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:letterSpacing">0.0178571429</item>
+    </style>
+
     <style name="MyBottomAppBarStyle" parent="Widget.MaterialComponents.BottomAppBar.Colored">
         <item name="backgroundTint">?superColor</item>
     </style>
 
     <style name="MyChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
-
+        <item name="android:textAppearance">@style/MyTextAppearance</item>
     </style>
 
     <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button">
