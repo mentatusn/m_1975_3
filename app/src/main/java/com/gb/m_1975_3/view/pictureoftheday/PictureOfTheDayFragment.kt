@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.gb.m_1975_3.R
 import com.gb.m_1975_3.databinding.FragmentPictureOfTheDayBinding
+import com.gb.m_1975_3.utils.Parameters
 import com.gb.m_1975_3.view.MainActivity
 import com.gb.m_1975_3.view.settings.SettingsFragment
 import com.gb.m_1975_3.viewmodel.AppState
@@ -103,6 +104,9 @@ class PictureOfTheDayFragment : Fragment() {
         })
 
         binding.fab.setOnClickListener {
+            //requireActivity().setTheme(R.style.MyGreenTheme)
+            Parameters.getInstance().theme = R.style.MyGreenTheme // TODO HW SharedPref
+            requireActivity().recreate()
             isMain = !isMain
             if (!isMain) {
                 binding.bottomAppBar.navigationIcon = null
@@ -145,7 +149,9 @@ class PictureOfTheDayFragment : Fragment() {
                 appState.serverResponseData.hdurl =
                     "https://api.nasa.gov/assets/img/favicons/favicon-192.png"
                 binding.imageView.load(appState.serverResponseData.hdurl) {
-                    // TODO HW placehilde+error+transform
+                    placeholder(R.drawable.giphy)
+                    error(R.drawable.ic_load_error_vector)
+                    crossfade(true)
                 }
                 binding.lifeHack.title.text = appState.serverResponseData.title
                 // TODO HW appState.serverResponseData.explanation
