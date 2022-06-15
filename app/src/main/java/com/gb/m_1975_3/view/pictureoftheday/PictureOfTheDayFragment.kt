@@ -55,7 +55,7 @@ class PictureOfTheDayFragment : Fragment() {
         when (item.itemId) {
             R.id.app_bar_fav -> Toast.makeText(context, "Favourite", Toast.LENGTH_SHORT).show()
             R.id.app_bar_settings -> requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.container,SettingsFragment.newInstance()).commit()
+                .replace(R.id.container,SettingsFragment.newInstance()).addToBackStack("").commit()
             android.R.id.home -> {
                 BottomNavigationDrawerFragment().show(requireActivity().supportFragmentManager, "")
             }
@@ -145,9 +145,6 @@ class PictureOfTheDayFragment : Fragment() {
             is AppState.Loading -> {/*TODO HW*/
             }
             is AppState.Success -> {
-                /*Временный ход*/ // FIXME
-                appState.serverResponseData.hdurl =
-                    "https://api.nasa.gov/assets/img/favicons/favicon-192.png"
                 binding.imageView.load(appState.serverResponseData.hdurl) {
                     placeholder(R.drawable.giphy)
                     error(R.drawable.ic_load_error_vector)
