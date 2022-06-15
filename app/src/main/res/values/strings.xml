@@ -12,5 +12,8 @@
     <string name="today">today</string>
     <string name="yesterday">yesterday</string>
     <string name="thedaybeforeyesterday">TDBY</string>
+    <string name="earth">Earth</string>
+    <string name="mars">Mars</string>
+    <string name="system">System</string>
 
 </resources>
