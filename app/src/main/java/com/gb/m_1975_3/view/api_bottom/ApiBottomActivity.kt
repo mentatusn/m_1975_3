@@ -20,7 +20,6 @@ class ApiBottomActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         binding.bottomNavigationView.selectedItemId = R.id.action_bottom_view_mars
-
         val badge = binding.bottomNavigationView.getOrCreateBadge(R.id.action_bottom_view_system)
         badge.number = 1000000
         badge.maxCharacterCount = 7
