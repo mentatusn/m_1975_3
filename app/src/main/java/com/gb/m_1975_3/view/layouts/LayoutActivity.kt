@@ -28,13 +28,13 @@ class LayoutActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_bottom_motion -> {
-
+                    navigationTo(MotionFragment())
                     true
                 }
                 else -> true
             }
         }
-        binding.bottomNavigationView.selectedItemId = R.id.action_bottom_coordinator
+        binding.bottomNavigationView.selectedItemId = R.id.action_bottom_motion
 
 
     }
