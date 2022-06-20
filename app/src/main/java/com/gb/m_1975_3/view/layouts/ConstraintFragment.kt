@@ -11,6 +11,8 @@ class ConstraintFragment: Fragment() {
     private var _binding: FragmentConstraintBinding? = null
     private val binding: FragmentConstraintBinding
         get() = _binding!!
+
+    var flag = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,6 +25,10 @@ class ConstraintFragment: Fragment() {
         _binding = null
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.btn0.setOnClickListener { flag = !flag; if(flag) {binding.group1.visibility = View.GONE}else {binding.group1.visibility = View.VISIBLE} }
+
+        //binding.group1.visibility = View.INVISIBLE
     }
     companion object {
         @JvmStatic
