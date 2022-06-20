@@ -24,7 +24,7 @@ class LayoutActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_bottom_coordinator -> {
-                   // navigationTo(CoordinatorFragment())
+                    navigationTo(CoordinatorFragment())
                     true
                 }
                 R.id.action_bottom_motion -> {
@@ -34,7 +34,7 @@ class LayoutActivity : AppCompatActivity() {
                 else -> true
             }
         }
-        binding.bottomNavigationView.selectedItemId = R.id.action_bottom_constraint
+        binding.bottomNavigationView.selectedItemId = R.id.action_bottom_coordinator
 
 
     }
