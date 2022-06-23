@@ -2,6 +2,7 @@ package com.gb.m_1975_3.view.animations
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.service.autofill.Validators.or
 
 
 import android.view.Gravity
@@ -12,39 +13,35 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.ChangeBounds
-import androidx.transition.ChangeImageTransform
-import androidx.transition.TransitionManager
-import androidx.transition.TransitionSet
+import androidx.transition.*
 import com.gb.m_1975_3.R
 import com.gb.m_1975_3.databinding.ActivityAnimationsBinding
 
 class AnimationsActivity : AppCompatActivity() {
     lateinit var binding: ActivityAnimationsBinding
-    var flag = false
+    var flag = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-        binding.imageView.setOnClickListener {imageView ->
-            flag = !flag
-
+        binding.button.setOnClickListener {
             val changeBounds = ChangeBounds()
-            val changeImageTransform = ChangeImageTransform()
-            val transitionSet = TransitionSet()
-            transitionSet.addTransition(changeBounds)
-            transitionSet.addTransition(changeImageTransform)
-            TransitionManager.beginDelayedTransition(binding.root,transitionSet)
+            val path = ArcMotion()
+            path.maximumAngle = 90F
+            changeBounds.setPathMotion(path)
+            changeBounds.duration = 3000L
+            TransitionManager.beginDelayedTransition(binding.root,changeBounds)
+            flag = !flag
             if(flag){
-                binding.imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-                (binding.imageView.layoutParams as FrameLayout.LayoutParams).gravity = Gravity.CENTER
-                (binding.imageView.layoutParams as FrameLayout.LayoutParams).height = FrameLayout.LayoutParams.MATCH_PARENT
+                val params = (binding.button.layoutParams as FrameLayout.LayoutParams)
+                params.gravity = Gravity.TOP or Gravity.START
+                binding.button.layoutParams = params
             }else{
-                binding.imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                (binding.imageView.layoutParams as FrameLayout.LayoutParams).gravity = Gravity.TOP
-                (binding.imageView.layoutParams as FrameLayout.LayoutParams).height = FrameLayout.LayoutParams.WRAP_CONTENT
+                val params = (binding.button.layoutParams as FrameLayout.LayoutParams)
+                params.gravity = Gravity.BOTTOM or Gravity.RIGHT
+                binding.button.layoutParams = params
             }
         }
 
