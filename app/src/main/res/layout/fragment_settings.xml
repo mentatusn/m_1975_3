@@ -7,6 +7,17 @@
     android:orientation="vertical">
 
 
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/play_pause_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/play_pause_circle"
+        android:backgroundTint="?colorPrimary"
+        android:checked="true"
+        android:contentDescription="@null"
+        android:thumb="@null" />
+
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
         android:layout_gravity="center"
