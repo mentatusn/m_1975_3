@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.gb.m_1975_3.R
@@ -20,7 +20,6 @@ import com.gb.m_1975_3.viewmodel.AppState
 import com.gb.m_1975_3.viewmodel.PictureOfTheDayViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import java.util.*
 
 
 class PictureOfTheDayFragment : Fragment() {

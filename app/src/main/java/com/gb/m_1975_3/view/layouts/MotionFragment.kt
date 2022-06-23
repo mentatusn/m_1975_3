@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.gb.m_1975_3.databinding.FragmentConstraintBinding
-import com.gb.m_1975_3.databinding.FragmentMotionEndBinding
 import com.gb.m_1975_3.databinding.FragmentMotionStartBinding
 
 class MotionFragment: Fragment() {

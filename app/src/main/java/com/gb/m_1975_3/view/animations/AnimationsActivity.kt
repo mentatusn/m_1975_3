@@ -1,53 +1,87 @@
 package com.gb.m_1975_3.view.animations
 
-import android.graphics.Rect
+
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.service.autofill.Validators.or
-
-
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.*
-import com.gb.m_1975_3.R
+import androidx.core.view.ViewCompat.animate
 import com.gb.m_1975_3.databinding.ActivityAnimationsBinding
 
 class AnimationsActivity : AppCompatActivity() {
     lateinit var binding: ActivityAnimationsBinding
-    var flag = true
+    private var flag = false
+    private var duration = 1000L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-        binding.button.setOnClickListener {
-            val changeBounds = ChangeBounds()
-            val path = ArcMotion()
-            path.maximumAngle = 90F
-            changeBounds.setPathMotion(path)
-            changeBounds.duration = 3000L
-            TransitionManager.beginDelayedTransition(binding.root,changeBounds)
+        binding.fab.setOnClickListener {
+
             flag = !flag
-            if(flag){
-                val params = (binding.button.layoutParams as FrameLayout.LayoutParams)
-                params.gravity = Gravity.TOP or Gravity.START
-                binding.button.layoutParams = params
-            }else{
-                val params = (binding.button.layoutParams as FrameLayout.LayoutParams)
-                params.gravity = Gravity.BOTTOM or Gravity.RIGHT
-                binding.button.layoutParams = params
+            if (flag) {
+                ObjectAnimator.ofFloat(binding.fab, View.ROTATION, 315f).setDuration(duration)
+                    .start()
+                ObjectAnimator.ofFloat(binding.optionTwoContainer, View.TRANSLATION_Y, -250f)
+                    .setDuration(duration).start()
+                ObjectAnimator.ofFloat(binding.optionOneContainer, View.TRANSLATION_Y, -130f)
+                    .setDuration(duration).start()
+
+                binding.optionOneContainer.animate()
+                    .alpha(1f)
+                    .setDuration(duration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            binding.optionOneContainer.isClickable = true
+                        }
+                    })
+                binding.optionTwoContainer.animate()
+                    .alpha(1f)
+                    .setDuration(duration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            binding.optionTwoContainer.isClickable = true
+                        }
+                    })
+                binding.transparentBackground.animate()
+                    .alpha(0.5f).duration = duration
+
+            } else {
+                ObjectAnimator.ofFloat(binding.fab, View.ROTATION, 0f).setDuration(duration).start()
+                ObjectAnimator.ofFloat(binding.optionTwoContainer, View.TRANSLATION_Y, 0f)
+                    .setDuration(duration).start()
+                ObjectAnimator.ofFloat(binding.optionOneContainer, View.TRANSLATION_Y, 0f)
+                    .setDuration(duration).start()
+
+                binding.optionOneContainer.animate()
+                    .alpha(0f)
+                    .setDuration(duration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationStart(animation: Animator?) {
+                            super.onAnimationStart(animation)
+                            binding.optionOneContainer.isClickable = false
+                        }
+                    })
+                binding.optionTwoContainer.animate()
+                    .alpha(0f)
+                    .setDuration(duration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationStart(animation: Animator?) {
+                            super.onAnimationStart(animation)
+                            binding.optionTwoContainer.isClickable = false
+                        }
+                    })
+
+                binding.transparentBackground.animate()
+                    .alpha(0f).duration = duration
+
             }
         }
-
     }
-
-
 
 
 }

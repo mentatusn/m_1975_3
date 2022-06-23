@@ -3,7 +3,6 @@ package com.gb.m_1975_3.view.api
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.gb.m_1975_3.R
 
 
 private const val ADAPTER_SIZE = 100

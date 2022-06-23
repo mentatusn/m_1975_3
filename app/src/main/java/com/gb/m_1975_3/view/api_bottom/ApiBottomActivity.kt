@@ -3,9 +3,10 @@ package com.gb.m_1975_3.view.api_bottom
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gb.m_1975_3.R
-import com.gb.m_1975_3.databinding.ActivityApiBinding
 import com.gb.m_1975_3.databinding.ActivityApiBottomBinding
-import com.gb.m_1975_3.view.api.*
+import com.gb.m_1975_3.view.api.EarthFragment
+import com.gb.m_1975_3.view.api.MarsFragment
+import com.gb.m_1975_3.view.api.SystemFragment
 import com.google.android.material.badge.BadgeDrawable
 
 class ApiBottomActivity : AppCompatActivity() {

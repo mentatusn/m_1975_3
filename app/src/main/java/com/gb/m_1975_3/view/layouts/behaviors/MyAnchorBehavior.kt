@@ -4,9 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.widget.NestedScrollView
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.textfield.TextInputLayout
 
 //class NestedBehavior():CoordinatorLayout.Behavior<NestedScrollView> {
 class MyAnchorBehavior(context: Context,attr:AttributeSet?=null):CoordinatorLayout.Behavior<View>(context,attr) {
