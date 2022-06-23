@@ -1,11 +1,14 @@
 package com.gb.m_1975_3.view.animations
 
+import android.graphics.Rect
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.transition.*
-import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
+import com.gb.m_1975_3.R
 import com.gb.m_1975_3.databinding.ActivityAnimationsBinding
 
 class AnimationsActivity : AppCompatActivity() {
@@ -16,39 +19,51 @@ class AnimationsActivity : AppCompatActivity() {
         binding = ActivityAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button.setOnClickListener {
-
-
-            val myTransitionSet = TransitionSet()
-            val myTransition = Slide(Gravity.END)
-            myTransition.duration = 2000L
-            myTransitionSet.addTransition(myTransition)
-            val cb = ChangeBounds()
-            cb.duration = 5000L
-            myTransitionSet.addTransition(cb)
-            TransitionManager.beginDelayedTransition(binding.root,myTransitionSet)
-            flag = !flag
-            if (flag) {
-                binding.text.visibility = View.VISIBLE
-            } else {
-                binding.text.visibility = View.GONE
-            }
-        }
+        binding.recyclerView.adapter = Adapter()
 
     }
 
-    fun old(){
-        val timer = object : CountDownTimer(2000L,200L){
-            override fun onTick(millisUntilFinished: Long) {
-                binding.text.alpha -= 0.1f
-                binding.text.scaleY -=0.1f
-            }
-            override fun onFinish() {
-                binding.text.alpha = 0f
-                binding.text.scaleY = 0f
-                binding.text.visibility = View.GONE
+    inner class Adapter : RecyclerView.Adapter<ViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            return ViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.activity_animations_recycler_item,
+                    parent,
+                    false
+                ) as View
+            )
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.itemView.setOnClickListener {
+                val transitionExplode = Explode()
+                val rect = Rect()
+                it.getGlobalVisibleRect(rect)
+                transitionExplode.epicenterCallback = object : Transition.EpicenterCallback() {
+                    override fun onGetEpicenter(transition: Transition?): Rect {
+                        return rect
+                    }
+                }
+                transitionExplode.duration= 2000L
+                transitionExplode.excludeTarget(it,true)
+
+                val transitionEpicenter = Fade()
+                transitionEpicenter.addTarget(it)
+                transitionEpicenter.duration = 99999999999
+                val ts = TransitionSet()
+                ts.addTransition(transitionExplode)
+                ts.addTransition(transitionEpicenter)
+                TransitionManager.beginDelayedTransition(binding.recyclerView,ts)
+                binding.recyclerView.adapter = null
             }
         }
-        timer.start()
+
+        override fun getItemCount(): Int {
+            return 32
+        }
     }
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+
 }
