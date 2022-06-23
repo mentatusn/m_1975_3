@@ -20,6 +20,7 @@ class AnimationsActivity : AppCompatActivity() {
         for (i in 0..4) {
             titles.add("Item $i")
         }
+
         binding.button.setOnClickListener {
             androidx.transition.TransitionManager.beginDelayedTransition(binding.transitionsContainer,
                 androidx.transition.ChangeBounds()
