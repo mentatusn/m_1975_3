@@ -9,7 +9,7 @@ import com.gb.m_1975_3.view.pictureoftheday.PictureOfTheDayFragment
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(Parameters.getInstance().theme)
+        //setTheme(Parameters.getInstance().theme)
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {

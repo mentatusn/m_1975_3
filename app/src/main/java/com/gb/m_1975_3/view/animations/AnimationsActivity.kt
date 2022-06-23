@@ -2,44 +2,37 @@ package com.gb.m_1975_3.view.animations
 
 
 import android.os.Bundle
-import androidx.transition.TransitionManager
-import android.view.animation.AnticipateOvershootInterpolator
+import android.view.Gravity
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.transition.ChangeBounds
-import com.gb.m_1975_3.R
-import com.gb.m_1975_3.databinding.ActivityAnimationsBonusStartBinding
+import androidx.core.view.ViewCompat
+import com.gb.m_1975_3.databinding.ActivityAnimationsShuffleBinding
 
 class AnimationsActivity : AppCompatActivity() {
-    lateinit var binding: ActivityAnimationsBonusStartBinding
-    private var flag = false
-    private var duration = 1000L
+    lateinit var binding: ActivityAnimationsShuffleBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAnimationsBonusStartBinding.inflate(layoutInflater)
+        binding = ActivityAnimationsShuffleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        val constraintSetStart = ConstraintSet()
-        constraintSetStart.clone(binding.root)
-
-        binding.backgroundImage.setOnClickListener {
-            flag = !flag
-            val changeBounds = ChangeBounds()
-            changeBounds.duration =1000L
-            changeBounds.interpolator = AnticipateOvershootInterpolator(5.0f)
-            TransitionManager.beginDelayedTransition(binding.root,changeBounds)
-            if(flag){
-                constraintSetStart.connect(R.id.title,ConstraintSet.END,R.id.constraint_container,ConstraintSet.END)
-                //constraintSetStart.clear(R.id.title)
-                constraintSetStart.applyTo(binding.root)
-            }else{
-                constraintSetStart.connect(R.id.title,ConstraintSet.END,R.id.constraint_container,ConstraintSet.START)
-                constraintSetStart.applyTo(binding.root)
+        val titles: MutableList<String> = ArrayList()
+        for (i in 0..4) {
+            titles.add("Item $i")
+        }
+        binding.button.setOnClickListener {
+            androidx.transition.TransitionManager.beginDelayedTransition(binding.transitionsContainer,
+                androidx.transition.ChangeBounds()
+            )
+            binding.transitionsContainer.removeAllViews()
+            titles.shuffle()
+            for (title in titles) {
+                binding.transitionsContainer.addView(TextView(this).apply {
+                    text = title
+                    ViewCompat.setTransitionName(this, title)
+                    gravity = Gravity.CENTER_HORIZONTAL
+                })
             }
         }
-
     }
-
-
 }
