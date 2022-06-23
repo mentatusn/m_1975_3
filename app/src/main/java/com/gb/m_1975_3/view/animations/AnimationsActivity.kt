@@ -21,9 +21,8 @@ class AnimationsActivity : AppCompatActivity() {
 
 
         val constraintSetStart = ConstraintSet()
-        val constraintSetEnd= ConstraintSet()
         constraintSetStart.clone(binding.root)
-        constraintSetEnd.load(this, R.layout.activity_animations_bonus_end)
+
         binding.backgroundImage.setOnClickListener {
             flag = !flag
             val changeBounds = ChangeBounds()
@@ -31,8 +30,11 @@ class AnimationsActivity : AppCompatActivity() {
             changeBounds.interpolator = AnticipateOvershootInterpolator(5.0f)
             TransitionManager.beginDelayedTransition(binding.root,changeBounds)
             if(flag){
-                constraintSetEnd.applyTo(binding.root)
+                constraintSetStart.connect(R.id.title,ConstraintSet.END,R.id.constraint_container,ConstraintSet.END)
+                //constraintSetStart.clear(R.id.title)
+                constraintSetStart.applyTo(binding.root)
             }else{
+                constraintSetStart.connect(R.id.title,ConstraintSet.END,R.id.constraint_container,ConstraintSet.START)
                 constraintSetStart.applyTo(binding.root)
             }
         }
