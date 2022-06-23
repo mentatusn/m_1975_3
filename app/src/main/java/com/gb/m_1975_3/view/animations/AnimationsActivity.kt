@@ -19,9 +19,14 @@ class AnimationsActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
 
 
+            val myTransitionSet = TransitionSet()
             val myTransition = Slide(Gravity.END)
             myTransition.duration = 2000L
-            TransitionManager.beginDelayedTransition(binding.root,myTransition)
+            myTransitionSet.addTransition(myTransition)
+            val cb = ChangeBounds()
+            cb.duration = 5000L
+            myTransitionSet.addTransition(cb)
+            TransitionManager.beginDelayedTransition(binding.root,myTransitionSet)
             flag = !flag
             if (flag) {
                 binding.text.visibility = View.VISIBLE
