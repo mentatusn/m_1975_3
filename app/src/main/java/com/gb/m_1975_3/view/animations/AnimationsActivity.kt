@@ -2,10 +2,8 @@ package com.gb.m_1975_3.view.animations
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.transition.ChangeBounds
-import android.transition.Fade
-import android.transition.TransitionManager
-import android.transition.TransitionSet
+import android.transition.*
+import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.gb.m_1975_3.databinding.ActivityAnimationsBinding
@@ -20,13 +18,10 @@ class AnimationsActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
 
-            val myAutoTransition = TransitionSet()
-            myAutoTransition.ordering = TransitionSet.ORDERING_SEQUENTIAL // по очереди
-            myAutoTransition.addTransition(Fade(Fade.OUT))
-            myAutoTransition.addTransition(ChangeBounds())
-            myAutoTransition.addTransition(Fade(Fade.IN))
-            myAutoTransition.duration = 2000L
-            TransitionManager.beginDelayedTransition(binding.root,myAutoTransition)
+
+            val myTransition = Slide(Gravity.END)
+            myTransition.duration = 2000L
+            TransitionManager.beginDelayedTransition(binding.root,myTransition)
             flag = !flag
             if (flag) {
                 binding.text.visibility = View.VISIBLE
