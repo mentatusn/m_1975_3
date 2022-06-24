@@ -7,6 +7,7 @@ class Parameters {
     var theme: Int = R.style.MyBlueTheme
 
     companion object {
+        
         @Volatile
         private var INSTANCE: Parameters? = null
         fun getInstance(): Parameters {
