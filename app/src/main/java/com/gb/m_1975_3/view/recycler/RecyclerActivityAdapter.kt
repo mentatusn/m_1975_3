@@ -3,7 +3,9 @@ package com.gb.m_1975_3.view.recycler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.gb.m_1975_3.R
 import com.gb.m_1975_3.databinding.ActivityRecyclerItemEarthBinding
 import com.gb.m_1975_3.databinding.ActivityRecyclerItemHeaderBinding
 import com.gb.m_1975_3.databinding.ActivityRecyclerItemMarsBinding
@@ -14,7 +16,7 @@ const val TYPE_MARS = 1
 const val TYPE_HEADER = 2
 
 class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
-    RecyclerView.Adapter<RecyclerActivityAdapter.BaseViewHolder>() {
+    RecyclerView.Adapter<RecyclerActivityAdapter.BaseViewHolder>(),ItemTouchHelperAdapter {
 
     // FIXME не имеем права использовать Mutable внутри адаптера
     private var dataList: MutableList<Pair<Data,Boolean>> = mutableListOf()
@@ -84,7 +86,7 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
         }
     }
 
-    inner class MarsViewHolder(view: View) : BaseViewHolder(view) {
+    inner class MarsViewHolder(view: View) : BaseViewHolder(view),ItemTouchHelperViewHolder {
         override fun bind(data: Pair<Data,Boolean>) {
             val binding = ActivityRecyclerItemMarsBinding.bind(itemView)
             binding.name.text = data.first.name
@@ -126,10 +128,30 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
                 notifyItemChanged(layoutPosition)
             }
         }
+
+        override fun onItemSelected() {
+            itemView.setBackgroundColor(ContextCompat.getColor(itemView.context,R.color.colorAccent))
+        }
+
+        override fun onItemClear() {
+            itemView.setBackgroundColor(0)
+        }
     }
 
     abstract class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         abstract fun bind(data: Pair<Data,Boolean>)
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) { // TODO HW нельзя двигать выше HEADER
+        dataList.removeAt(fromPosition).apply {
+            dataList.add(toPosition , this)
+        }
+        notifyItemMoved(fromPosition,toPosition)
+    }
+
+    override fun onItemDismiss(position: Int) {
+        dataList.removeAt(position)
+        notifyItemRemoved(position)
     }
 
 }

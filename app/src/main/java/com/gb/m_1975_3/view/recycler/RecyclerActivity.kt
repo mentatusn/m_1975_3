@@ -2,6 +2,9 @@ package com.gb.m_1975_3.view.recycler
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SortedListAdapterCallback
 import com.gb.m_1975_3.databinding.ActivityRecyclerBinding
 
 class RecyclerActivity : AppCompatActivity() {
@@ -38,5 +41,57 @@ class RecyclerActivity : AppCompatActivity() {
         data.add(0, Pair(Data("Заголовок", type = TYPE_HEADER), false))
 
         adapter.setData(data)
+
+        ItemTouchHelper(ItemTouchHelperCallbackSettings(adapter)).attachToRecyclerView(binding.recyclerView)
     }
+}
+
+class ItemTouchHelperCallbackSettings(private val adapterCallback: ItemTouchHelperAdapter) :
+    ItemTouchHelper.Callback() {
+
+    override fun isLongPressDragEnabled(): Boolean {
+        return true
+    }
+
+    override fun isItemViewSwipeEnabled(): Boolean {
+        return true
+    }
+
+
+    override fun getMovementFlags(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder
+    ): Int {
+        val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        return makeMovementFlags(dragFlags, swipeFlags)
+    }
+
+    override fun onMove(
+        recyclerView: RecyclerView,
+        start: RecyclerView.ViewHolder,
+        end: RecyclerView.ViewHolder
+    ): Boolean {
+        adapterCallback.onItemMove(start.adapterPosition, end.adapterPosition)
+        return true
+    }
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        adapterCallback.onItemDismiss(viewHolder.adapterPosition)
+    }
+
+    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+            if (viewHolder is RecyclerActivityAdapter.MarsViewHolder)
+                (viewHolder as RecyclerActivityAdapter.MarsViewHolder).onItemSelected()
+        }
+        super.onSelectedChanged(viewHolder, actionState)
+    }
+
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+        if (viewHolder is RecyclerActivityAdapter.MarsViewHolder)
+            (viewHolder as RecyclerActivityAdapter.MarsViewHolder).onItemClear()
+        super.clearView(recyclerView, viewHolder)
+    }
+
 }
