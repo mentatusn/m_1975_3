@@ -6,12 +6,12 @@ import com.gb.m_1975_3.databinding.ActivityRecyclerBinding
 
 class RecyclerActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecyclerBinding
-    val adapter = RecyclerActivityAdapter()
+    private val adapter = RecyclerActivityAdapter { position, data -> /*TODO WH */ }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityRecyclerBinding = ActivityRecyclerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.recyclerView.adapter =adapter
+        binding.recyclerView.adapter = adapter
 
         val data = arrayListOf(
             Data("Earth", type = TYPE_EARTH),
@@ -20,9 +20,9 @@ class RecyclerActivity : AppCompatActivity() {
             Data("Earth", type = TYPE_EARTH),
             Data("Earth", type = TYPE_EARTH),
             Data("Earth", type = TYPE_EARTH),
-            Data("Mars", null,type = TYPE_MARS)
+            Data("Mars", null, type = TYPE_MARS)
         )
-        data.add(0,Data("Заголовок", type = TYPE_HEADER))
+        data.add(0, Data("Заголовок", type = TYPE_HEADER))
 
         adapter.setData(data)
     }
