@@ -9,6 +9,7 @@ import com.gb.m_1975_3.databinding.ActivityRecyclerBinding
 
 class RecyclerActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecyclerBinding
+    private var isNewList = false
     private val adapter = RecyclerActivityAdapter { position, data -> /*TODO WH */ }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,20 +31,54 @@ class RecyclerActivity : AppCompatActivity() {
         location3D.third
 
         val data = arrayListOf(
-            Pair(Data("Earth", type = TYPE_EARTH), false),
-            Pair(Data("Earth", type = TYPE_EARTH), false),
-            Pair(Data("Mars", "", type = TYPE_MARS), false),
-            Pair(Data("Earth", type = TYPE_EARTH), false),
-            Pair(Data("Earth", type = TYPE_EARTH), false),
-            Pair(Data("Earth", type = TYPE_EARTH), false),
-            Pair(Data("Mars", null, type = TYPE_MARS), false)
+            Pair(Data(1,"Earth", type = TYPE_EARTH), false),
+            Pair(Data(2,"Earth", type = TYPE_EARTH), false),
+            Pair(Data(3,"Mars", "", type = TYPE_MARS), false),
+            Pair(Data(4,"Earth", type = TYPE_EARTH), false),
+            Pair(Data(5,"Earth", type = TYPE_EARTH), false),
+            Pair(Data(6,"Earth", type = TYPE_EARTH), false),
+            Pair(Data(7,"Mars", null, type = TYPE_MARS), false)
         )
-        data.add(0, Pair(Data("Заголовок", type = TYPE_HEADER), false))
+        data.add(0, Pair(Data(0,"Заголовок", type = TYPE_HEADER), false))
 
         adapter.setData(data)
 
         ItemTouchHelper(ItemTouchHelperCallbackSettings(adapter)).attachToRecyclerView(binding.recyclerView)
+
+
+        binding.recyclerActivityDiffUtilFAB.setOnClickListener { changeAdapterData() }
     }
+
+    private fun changeAdapterData() {
+        adapter.setData(createItemList(isNewList).map { it }.toMutableList())
+        isNewList = !isNewList
+    }
+
+    private fun createItemList(instanceNumber: Boolean): MutableList<Pair<Data, Boolean>> {
+        return when (instanceNumber) {
+            false -> mutableListOf(
+                Pair(Data(0, "Header", type = TYPE_MARS), false),
+                Pair(Data(1, "Mars", "", type = TYPE_MARS), false),
+                Pair(Data(2, "Mars", "", type = TYPE_MARS), false),
+                Pair(Data(3, "Mars", "", type = TYPE_MARS), false),
+                Pair(Data(4, "Mars", "", type = TYPE_MARS), false),
+                Pair(Data(5, "Mars", "", type = TYPE_MARS), false),
+                Pair(Data(6, "Mars", "", type = TYPE_MARS), false)
+            )
+            true -> mutableListOf(
+                Pair(Data(0, "Header", type = TYPE_MARS), false),
+                Pair(Data(1, "Mars", "", type = TYPE_MARS), false),
+                Pair(Data(2, "Jupiter", "", type = TYPE_MARS), false),
+                Pair(Data(3, "Mars", "", type = TYPE_MARS), false),
+                Pair(Data(4, "Neptune", "", type = TYPE_MARS), false),
+                Pair(Data(5, "Saturn", "", type = TYPE_MARS), false),
+                Pair(Data(6, "Mars", "", type = TYPE_MARS), false)
+            )
+        }
+    }
+
+
+
 }
 
 class ItemTouchHelperCallbackSettings(private val adapterCallback: ItemTouchHelperAdapter) :

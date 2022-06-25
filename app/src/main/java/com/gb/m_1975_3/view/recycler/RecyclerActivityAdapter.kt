@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gb.m_1975_3.R
 import com.gb.m_1975_3.databinding.ActivityRecyclerItemEarthBinding
@@ -18,14 +19,19 @@ const val TYPE_HEADER = 2
 class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
     RecyclerView.Adapter<RecyclerActivityAdapter.BaseViewHolder>(),ItemTouchHelperAdapter {
 
+
     // FIXME не имеем права использовать Mutable внутри адаптера
-    private var dataList: MutableList<Pair<Data,Boolean>> = mutableListOf()
+    private val dataList: MutableList<Pair<Data,Boolean>> = mutableListOf()
     fun setData(newData: MutableList<Pair<Data,Boolean>>) {
-        this.dataList = newData
-        notifyDataSetChanged()
+
+        val result = DiffUtil.calculateDiff(DiffCallback(dataList,newData))
+        result.dispatchUpdatesTo(this)
+        this.dataList.clear()
+        this.dataList.addAll( newData)
+
     }
 
-    private fun generateItem() = Pair(Data("Mars(G)", "", type = TYPE_MARS),false)
+    private fun generateItem() = Pair(Data(0,"Mars(G)", "", type = TYPE_MARS),false)
 
     override fun getItemViewType(position: Int): Int {
         return dataList[position].first.type
@@ -61,6 +67,21 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
                 MarsViewHolder(binding.root)
             }
         }
+    }
+
+    override fun onBindViewHolder(
+        holder: BaseViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if(payloads.isNullOrEmpty()){
+            super.onBindViewHolder(holder, position, payloads)
+        }else{
+            val combine = createCombinedPayload(payloads as List<Change<Pair<Data,Boolean>>>)
+            if(combine.oldData.first.name!=combine.newData.first.name)
+            ActivityRecyclerItemMarsBinding.bind(holder.itemView).name.text = combine.newData.first.name
+        }
+
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
