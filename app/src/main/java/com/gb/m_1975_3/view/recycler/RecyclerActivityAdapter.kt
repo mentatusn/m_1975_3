@@ -100,6 +100,23 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
                 dataList.removeAt(layoutPosition)
                 notifyItemRemoved(layoutPosition)
             }
+
+            binding.moveItemUp.setOnClickListener {
+                // TODO HW убрать ошибку java.lang.IndexOutOfBoundsException:
+                dataList.removeAt(layoutPosition).apply {
+                    dataList.add(layoutPosition -1, this)
+                }
+
+                notifyItemMoved(layoutPosition,layoutPosition-1)
+            }
+            binding.moveItemDown.setOnClickListener {
+                // TODO HW убрать ошибку java.lang.IndexOutOfBoundsException:
+                dataList.removeAt(layoutPosition).apply {
+                    dataList.add(layoutPosition +1, this)
+                }
+
+                notifyItemMoved(layoutPosition,layoutPosition+1)
+            }
         }
     }
 
