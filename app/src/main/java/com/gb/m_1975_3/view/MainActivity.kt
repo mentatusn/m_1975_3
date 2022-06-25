@@ -3,7 +3,6 @@ package com.gb.m_1975_3.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gb.m_1975_3.R
-import com.gb.m_1975_3.utils.Parameters
 import com.gb.m_1975_3.view.pictureoftheday.PictureOfTheDayFragment
 
 class MainActivity : AppCompatActivity() {
