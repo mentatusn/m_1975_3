@@ -13,16 +13,29 @@ class RecyclerActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.recyclerView.adapter = adapter
 
+        val lat = 12
+        val lon = 22
+        val z = 22
+
+        val location = Pair(lat, lon)
+        val location3D = Triple(lat, lon, z)
+        val locationAnotherOne = lat to lon
+        val location3DAnother = lat to lon to z
+
+        location.second
+        location.first
+        location3D.third
+
         val data = arrayListOf(
-            Data("Earth", type = TYPE_EARTH),
-            Data("Earth", type = TYPE_EARTH),
-            Data("Mars", "", type = TYPE_MARS),
-            Data("Earth", type = TYPE_EARTH),
-            Data("Earth", type = TYPE_EARTH),
-            Data("Earth", type = TYPE_EARTH),
-            Data("Mars", null, type = TYPE_MARS)
+            Pair(Data("Earth", type = TYPE_EARTH), false),
+            Pair(Data("Earth", type = TYPE_EARTH), false),
+            Pair(Data("Mars", "", type = TYPE_MARS), false),
+            Pair(Data("Earth", type = TYPE_EARTH), false),
+            Pair(Data("Earth", type = TYPE_EARTH), false),
+            Pair(Data("Earth", type = TYPE_EARTH), false),
+            Pair(Data("Mars", null, type = TYPE_MARS), false)
         )
-        data.add(0, Data("Заголовок", type = TYPE_HEADER))
+        data.add(0, Pair(Data("Заголовок", type = TYPE_HEADER), false))
 
         adapter.setData(data)
     }

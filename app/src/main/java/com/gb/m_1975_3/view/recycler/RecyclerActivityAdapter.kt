@@ -17,16 +17,16 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
     RecyclerView.Adapter<RecyclerActivityAdapter.BaseViewHolder>() {
 
     // FIXME не имеем права использовать Mutable внутри адаптера
-    private var dataList: MutableList<Data> = mutableListOf()
-    fun setData(newData: MutableList<Data>) {
+    private var dataList: MutableList<Pair<Data,Boolean>> = mutableListOf()
+    fun setData(newData: MutableList<Pair<Data,Boolean>>) {
         this.dataList = newData
         notifyDataSetChanged()
     }
 
-    private fun generateItem() = Data("Mars(G)", "", type = TYPE_MARS)
+    private fun generateItem() = Pair(Data("Mars(G)", "", type = TYPE_MARS),false)
 
     override fun getItemViewType(position: Int): Int {
-        return dataList[position].type
+        return dataList[position].first.type
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -72,22 +72,23 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
 
     class EarthViewHolder(val binding: ActivityRecyclerItemEarthBinding) :
         BaseViewHolder(binding.root) {
-        override fun bind(data: Data) {
-            binding.name.text = data.name
+        override fun bind(data: Pair<Data,Boolean>) {
+            binding.name.text = data.first.name
         }
     }
 
     class HeaderViewHolder(val binding: ActivityRecyclerItemHeaderBinding) :
         BaseViewHolder(binding.root) {
-        override fun bind(data: Data) {
-            binding.name.text = data.name
+        override fun bind(data: Pair<Data,Boolean>) {
+            binding.name.text = data.first.name
         }
     }
 
     inner class MarsViewHolder(view: View) : BaseViewHolder(view) {
-        override fun bind(data: Data) {
+        override fun bind(data: Pair<Data,Boolean>) {
             val binding = ActivityRecyclerItemMarsBinding.bind(itemView)
-            binding.name.text = data.name
+            binding.name.text = data.first.name
+            binding.marsDescriptionTextView.visibility = if(data.second) View.VISIBLE else View.GONE
             binding.addItemImageView.setOnClickListener {
                 // FIXME НУЖНО ПРОБРОСИТЬ СОБЫТИЕ ЧЕРЕЗ ЦЕПОЧКУ ADAPTER->VIEW->VIEW_MODEL->REPOSITORY и обратно
                 //FIXME callback.
@@ -114,14 +115,21 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
                 dataList.removeAt(layoutPosition).apply {
                     dataList.add(layoutPosition +1, this)
                 }
-
                 notifyItemMoved(layoutPosition,layoutPosition+1)
+            }
+
+            binding.name.setOnClickListener {
+                dataList[layoutPosition] = dataList[layoutPosition].let {
+                    it.first to !it.second
+                }
+                //binding.marsDescriptionTextView.visibility = if(dataList[layoutPosition].second) View.VISIBLE else View.GONE
+                notifyItemChanged(layoutPosition)
             }
         }
     }
 
     abstract class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun bind(data: Data)
+        abstract fun bind(data: Pair<Data,Boolean>)
     }
 
 }
