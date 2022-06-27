@@ -9,7 +9,9 @@ import android.os.Bundle
 import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.style.BulletSpan
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -163,7 +165,8 @@ class PictureOfTheDayFragment : Fragment() {
                     "layer1/layer2/folder1/folder2/AZERET.ttf")*/
 
 
-                val text = "My text \nbullet one \nbullet two \nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two\nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two\nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two\nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two"
+                val text =
+                    "123456789 My text \nbullet one \nbullet two \nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two\nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two\nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two\nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two"
                 val spannableString = SpannableString(text)
                 val list = text.indexesOf("\n")
 
@@ -176,37 +179,27 @@ class PictureOfTheDayFragment : Fragment() {
                             20
                         ), current, it, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
-                    current = it+1
+                    current = it + 1
                 }
 
-                //binding.lifeHack.explanation.text = Html.fromHtml(text,Html.FROM_HTML_MODE_COMPACT)
+                val spannableStringBuilder = SpannableStringBuilder(spannableString)
+
+
+                spannableStringBuilder.setSpan(
+                    ForegroundColorSpan(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.colorAccent
+                        )
+                    ),
+                    0, 5, Spannable.SPAN_INCLUSIVE_EXCLUSIVE // никаких двусмысленностей, всё должно быть понятно сразу
+                )
+
+                spannableStringBuilder.insert(0,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
 
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    spannableString.setSpan(
-                        BulletSpan(
-                            20,
-                            ContextCompat.getColor(requireContext(), R.color.colorAccent),
-                            20
-                        ), 9, 20, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    spannableString.setSpan(
-                        BulletSpan(
-                            20,
-                            ContextCompat.getColor(requireContext(), R.color.colorAccent),
-                            20
-                        ), 21, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                } else {
-                    spannableString.setSpan(
-                        BulletSpan(
-                            20,
-                            ContextCompat.getColor(requireContext(), R.color.colorAccent)
-                        ), 8, 21, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                binding.lifeHack.explanation.text = spannableString
+                binding.lifeHack.explanation.text = spannableStringBuilder
             }
         }
     }
