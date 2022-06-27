@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
+import android.text.SpannableString
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -152,8 +154,16 @@ class PictureOfTheDayFragment : Fragment() {
                 }
                 binding.lifeHack.title.text = appState.serverResponseData.title
                 binding.lifeHack.explanation.text = appState.serverResponseData.explanation
-                binding.lifeHack.explanation.typeface = Typeface.createFromAsset(requireActivity().assets,
-                    "layer1/layer2/folder1/folder2/AZERET.ttf")
+                /*binding.lifeHack.explanation.typeface = Typeface.createFromAsset(requireActivity().assets,
+                    "layer1/layer2/folder1/folder2/AZERET.ttf")*/
+
+
+                val text = "My text <ul><li>bullet one</li><li>bullet two</li></ul>"
+                //val textNormal = "My text \nbullet one \nbullet two"
+                binding.lifeHack.explanation.text = Html.fromHtml(text,Html.FROM_HTML_MODE_COMPACT)
+
+                //val spannableString = SpannableString()
+
             }
         }
     }
