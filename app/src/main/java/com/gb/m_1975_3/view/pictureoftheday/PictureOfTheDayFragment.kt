@@ -1,6 +1,7 @@
 package com.gb.m_1975_3.view.pictureoftheday
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -150,7 +151,9 @@ class PictureOfTheDayFragment : Fragment() {
                     crossfade(true)
                 }
                 binding.lifeHack.title.text = appState.serverResponseData.title
-                // TODO HW appState.serverResponseData.explanation
+                binding.lifeHack.explanation.text = appState.serverResponseData.explanation
+                binding.lifeHack.explanation.typeface = Typeface.createFromAsset(requireActivity().assets,
+                    "layer1/layer2/folder1/folder2/AZERET.ttf")
             }
         }
     }
