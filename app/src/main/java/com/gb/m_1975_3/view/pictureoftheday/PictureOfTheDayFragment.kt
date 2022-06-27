@@ -14,6 +14,7 @@ import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -182,9 +183,12 @@ class PictureOfTheDayFragment : Fragment() {
                     current = it + 1
                 }
 
-                val spannableStringBuilder = SpannableStringBuilder(spannableString)
+                var spannableStringBuilder = SpannableStringBuilder(spannableString)
+                binding.lifeHack.explanation.setText(spannableStringBuilder,TextView.BufferType.EDITABLE)
+                spannableStringBuilder = binding.lifeHack.explanation.text as SpannableStringBuilder
 
 
+           
                 spannableStringBuilder.setSpan(
                     ForegroundColorSpan(
                         ContextCompat.getColor(
@@ -199,7 +203,6 @@ class PictureOfTheDayFragment : Fragment() {
 
 
 
-                binding.lifeHack.explanation.text = spannableStringBuilder
             }
         }
     }
