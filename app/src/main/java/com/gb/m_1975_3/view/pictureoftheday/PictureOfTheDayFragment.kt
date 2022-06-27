@@ -1,5 +1,6 @@
 package com.gb.m_1975_3.view.pictureoftheday
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
@@ -143,6 +144,7 @@ class PictureOfTheDayFragment : Fragment() {
 
     }
 
+    @SuppressLint("NewApi") // TODO HW обязательно УПАДЕТ НА всех версиях ниже 28
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Error -> {/*TODO HW*/
@@ -161,13 +163,25 @@ class PictureOfTheDayFragment : Fragment() {
                     "layer1/layer2/folder1/folder2/AZERET.ttf")*/
 
 
-                val text = "My text \nbullet one \nbullet two \nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two"
+                val text = "My text \nbullet one \nbullet two \nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two\nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two\nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two\nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two"
+                val spannableString = SpannableString(text)
+                val list = text.indexesOf("\n")
 
-           
+                var current = 0
+                list.forEach {
+                    spannableString.setSpan(
+                        BulletSpan(
+                            20,
+                            ContextCompat.getColor(requireContext(), R.color.colorAccent),
+                            20
+                        ), current, it, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    current = it+1
+                }
 
                 //binding.lifeHack.explanation.text = Html.fromHtml(text,Html.FROM_HTML_MODE_COMPACT)
 
-                val spannableString = SpannableString(text)
+
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     spannableString.setSpan(
