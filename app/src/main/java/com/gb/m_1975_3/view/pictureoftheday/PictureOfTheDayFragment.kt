@@ -12,6 +12,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
+import android.text.style.ImageSpan
 import android.util.Log
 import android.view.*
 import android.widget.TextView
@@ -188,7 +189,7 @@ class PictureOfTheDayFragment : Fragment() {
                 spannableStringBuilder = binding.lifeHack.explanation.text as SpannableStringBuilder
 
 
-           
+
                 spannableStringBuilder.setSpan(
                     ForegroundColorSpan(
                         ContextCompat.getColor(
@@ -198,6 +199,12 @@ class PictureOfTheDayFragment : Fragment() {
                     ),
                     0, 5, Spannable.SPAN_INCLUSIVE_EXCLUSIVE // никаких двусмысленностей, всё должно быть понятно сразу
                 )
+                for (i in spannableStringBuilder.indices) {
+                    if (spannableStringBuilder[i] == 'o') {
+                        spannableStringBuilder.setSpan(ImageSpan(requireContext(), R.drawable.ic_earth), i, i + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                    }
+                }
+
 
                 spannableStringBuilder.insert(0,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
