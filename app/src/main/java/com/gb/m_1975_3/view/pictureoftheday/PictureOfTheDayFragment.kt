@@ -3,9 +3,12 @@ package com.gb.m_1975_3.view.pictureoftheday
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.text.Spannable
 import android.text.SpannableString
+import android.text.style.BulletSpan
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -57,7 +60,7 @@ class PictureOfTheDayFragment : Fragment() {
         when (item.itemId) {
             R.id.app_bar_fav -> Toast.makeText(context, "Favourite", Toast.LENGTH_SHORT).show()
             R.id.app_bar_settings -> requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.container,SettingsFragment.newInstance()).addToBackStack("").commit()
+                .replace(R.id.container, SettingsFragment.newInstance()).addToBackStack("").commit()
             android.R.id.home -> {
                 BottomNavigationDrawerFragment().show(requireActivity().supportFragmentManager, "")
             }
@@ -158,15 +161,46 @@ class PictureOfTheDayFragment : Fragment() {
                     "layer1/layer2/folder1/folder2/AZERET.ttf")*/
 
 
-                val text = "My text <ul><li>bullet one</li><li>bullet two</li></ul>"
-                //val textNormal = "My text \nbullet one \nbullet two"
-                binding.lifeHack.explanation.text = Html.fromHtml(text,Html.FROM_HTML_MODE_COMPACT)
+                val text = "My text \nbullet one \nbullet two \nbulleretdfhrtjhtht two\nbullet twtykjytko \nbullerettht twtyjktyo\nbullet twtyko \nbullertrhjtrjettht two"
 
-                //val spannableString = SpannableString()
+           
 
+                //binding.lifeHack.explanation.text = Html.fromHtml(text,Html.FROM_HTML_MODE_COMPACT)
+
+                val spannableString = SpannableString(text)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    spannableString.setSpan(
+                        BulletSpan(
+                            20,
+                            ContextCompat.getColor(requireContext(), R.color.colorAccent),
+                            20
+                        ), 9, 20, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    spannableString.setSpan(
+                        BulletSpan(
+                            20,
+                            ContextCompat.getColor(requireContext(), R.color.colorAccent),
+                            20
+                        ), 21, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                } else {
+                    spannableString.setSpan(
+                        BulletSpan(
+                            20,
+                            ContextCompat.getColor(requireContext(), R.color.colorAccent)
+                        ), 8, 21, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                binding.lifeHack.explanation.text = spannableString
             }
         }
     }
+
+    fun String.indexesOf(substr: String, ignoreCase: Boolean = true): List<Int> =
+        (if (ignoreCase) Regex(substr, RegexOption.IGNORE_CASE) else Regex(substr))
+            .findAll(this).map { it.range.first }.toList()
+
 
     override fun onDestroy() {
         super.onDestroy()
