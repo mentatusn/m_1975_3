@@ -9,6 +9,7 @@ import com.gb.m_1975_3.R
 class SplashActivity : AppCompatActivity() { //TODO HW single-activity пытаемся сохранить
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_splash)
     }
 }
