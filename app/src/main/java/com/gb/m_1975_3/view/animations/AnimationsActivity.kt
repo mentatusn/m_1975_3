@@ -22,7 +22,8 @@ class AnimationsActivity : AppCompatActivity() {
         }
 
         binding.button.setOnClickListener {
-            androidx.transition.TransitionManager.beginDelayedTransition(binding.transitionsContainer,
+            androidx.transition.TransitionManager.beginDelayedTransition(
+                binding.transitionsContainer,
                 androidx.transition.ChangeBounds()
             )
             binding.transitionsContainer.removeAllViews()

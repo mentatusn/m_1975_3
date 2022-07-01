@@ -29,7 +29,7 @@ class SettingsFragment : Fragment() {
         binding.chip1.setOnClickListener {
             Toast.makeText(context, "setOnClickListener", Toast.LENGTH_SHORT).show()
         }
-        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->  }
+        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds -> }
     }
 
     override fun onDestroy() {

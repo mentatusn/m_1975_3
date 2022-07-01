@@ -2,10 +2,13 @@ package com.gb.m_1975_3.view.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 
-class DiffCallback(private val oldItems:List<Pair<Data,Boolean>>,private val newItems:List<Pair<Data,Boolean>>) :DiffUtil.Callback(){
-    override fun getOldListSize()= oldItems.size
+class DiffCallback(
+    private val oldItems: List<Pair<Data, Boolean>>,
+    private val newItems: List<Pair<Data, Boolean>>
+) : DiffUtil.Callback() {
+    override fun getOldListSize() = oldItems.size
 
-    override fun getNewListSize()= newItems.size
+    override fun getNewListSize() = newItems.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldItems[oldItemPosition].first.id == newItems[newItemPosition].first.id
@@ -17,8 +20,8 @@ class DiffCallback(private val oldItems:List<Pair<Data,Boolean>>,private val new
     }
 
     override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
-        val old  =oldItems[oldItemPosition]
-        val new  =newItems[newItemPosition]
-        return Change(old,new)
+        val old = oldItems[oldItemPosition]
+        val new = newItems[newItemPosition]
+        return Change(old, new)
     }
 }

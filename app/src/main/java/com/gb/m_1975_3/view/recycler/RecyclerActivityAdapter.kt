@@ -17,21 +17,21 @@ const val TYPE_MARS = 1
 const val TYPE_HEADER = 2
 
 class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
-    RecyclerView.Adapter<RecyclerActivityAdapter.BaseViewHolder>(),ItemTouchHelperAdapter {
+    RecyclerView.Adapter<RecyclerActivityAdapter.BaseViewHolder>(), ItemTouchHelperAdapter {
 
 
     // FIXME не имеем права использовать Mutable внутри адаптера
-    private val dataList: MutableList<Pair<Data,Boolean>> = mutableListOf()
-    fun setData(newData: MutableList<Pair<Data,Boolean>>) {
+    private val dataList: MutableList<Pair<Data, Boolean>> = mutableListOf()
+    fun setData(newData: MutableList<Pair<Data, Boolean>>) {
 
-        val result = DiffUtil.calculateDiff(DiffCallback(dataList,newData))
+        val result = DiffUtil.calculateDiff(DiffCallback(dataList, newData))
         result.dispatchUpdatesTo(this)
         this.dataList.clear()
-        this.dataList.addAll( newData)
+        this.dataList.addAll(newData)
 
     }
 
-    private fun generateItem() = Pair(Data(0,"Mars(G)", "", type = TYPE_MARS),false)
+    private fun generateItem() = Pair(Data(0, "Mars(G)", "", type = TYPE_MARS), false)
 
     override fun getItemViewType(position: Int): Int {
         return dataList[position].first.type
@@ -74,12 +74,13 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
         position: Int,
         payloads: MutableList<Any>
     ) {
-        if(payloads.isNullOrEmpty()){
+        if (payloads.isNullOrEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
-        }else{
-            val combine = createCombinedPayload(payloads as List<Change<Pair<Data,Boolean>>>)
-            if(combine.oldData.first.name!=combine.newData.first.name)
-            ActivityRecyclerItemMarsBinding.bind(holder.itemView).name.text = combine.newData.first.name
+        } else {
+            val combine = createCombinedPayload(payloads as List<Change<Pair<Data, Boolean>>>)
+            if (combine.oldData.first.name != combine.newData.first.name)
+                ActivityRecyclerItemMarsBinding.bind(holder.itemView).name.text =
+                    combine.newData.first.name
         }
 
     }
@@ -95,27 +96,28 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
 
     class EarthViewHolder(val binding: ActivityRecyclerItemEarthBinding) :
         BaseViewHolder(binding.root) {
-        override fun bind(data: Pair<Data,Boolean>) {
+        override fun bind(data: Pair<Data, Boolean>) {
             binding.name.text = data.first.name
         }
     }
 
     class HeaderViewHolder(val binding: ActivityRecyclerItemHeaderBinding) :
         BaseViewHolder(binding.root) {
-        override fun bind(data: Pair<Data,Boolean>) {
+        override fun bind(data: Pair<Data, Boolean>) {
             binding.name.text = data.first.name
         }
     }
 
-    inner class MarsViewHolder(view: View) : BaseViewHolder(view),ItemTouchHelperViewHolder {
-        override fun bind(data: Pair<Data,Boolean>) {
+    inner class MarsViewHolder(view: View) : BaseViewHolder(view), ItemTouchHelperViewHolder {
+        override fun bind(data: Pair<Data, Boolean>) {
             val binding = ActivityRecyclerItemMarsBinding.bind(itemView)
             binding.name.text = data.first.name
-            binding.marsDescriptionTextView.visibility = if(data.second) View.VISIBLE else View.GONE
+            binding.marsDescriptionTextView.visibility =
+                if (data.second) View.VISIBLE else View.GONE
             binding.addItemImageView.setOnClickListener {
                 // FIXME НУЖНО ПРОБРОСИТЬ СОБЫТИЕ ЧЕРЕЗ ЦЕПОЧКУ ADAPTER->VIEW->VIEW_MODEL->REPOSITORY и обратно
                 //FIXME callback.
-                dataList.add(adapterPosition,generateItem())
+                dataList.add(adapterPosition, generateItem())
                 notifyItemInserted(adapterPosition)
             }
             binding.removeItemImageView.setOnClickListener {
@@ -128,17 +130,17 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
             binding.moveItemUp.setOnClickListener {
                 // TODO HW убрать ошибку java.lang.IndexOutOfBoundsException:
                 dataList.removeAt(layoutPosition).apply {
-                    dataList.add(layoutPosition -1, this)
+                    dataList.add(layoutPosition - 1, this)
                 }
 
-                notifyItemMoved(layoutPosition,layoutPosition-1)
+                notifyItemMoved(layoutPosition, layoutPosition - 1)
             }
             binding.moveItemDown.setOnClickListener {
                 // TODO HW убрать ошибку java.lang.IndexOutOfBoundsException:
                 dataList.removeAt(layoutPosition).apply {
-                    dataList.add(layoutPosition +1, this)
+                    dataList.add(layoutPosition + 1, this)
                 }
-                notifyItemMoved(layoutPosition,layoutPosition+1)
+                notifyItemMoved(layoutPosition, layoutPosition + 1)
             }
 
             binding.name.setOnClickListener {
@@ -151,7 +153,12 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
         }
 
         override fun onItemSelected() {
-            itemView.setBackgroundColor(ContextCompat.getColor(itemView.context,R.color.colorAccent))
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorAccent
+                )
+            )
         }
 
         override fun onItemClear() {
@@ -160,14 +167,17 @@ class RecyclerActivityAdapter(val callback: SomeActionAdapter) :
     }
 
     abstract class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun bind(data: Pair<Data,Boolean>)
+        abstract fun bind(data: Pair<Data, Boolean>)
     }
 
-    override fun onItemMove(fromPosition: Int, toPosition: Int) { // TODO HW нельзя двигать выше HEADER
+    override fun onItemMove(
+        fromPosition: Int,
+        toPosition: Int
+    ) { // TODO HW нельзя двигать выше HEADER
         dataList.removeAt(fromPosition).apply {
-            dataList.add(toPosition , this)
+            dataList.add(toPosition, this)
         }
-        notifyItemMoved(fromPosition,toPosition)
+        notifyItemMoved(fromPosition, toPosition)
     }
 
     override fun onItemDismiss(position: Int) {

@@ -15,21 +15,22 @@ class PictureOfTheDayViewModel(
 ) : ViewModel() {
 
     fun getLiveDataForViewToObserve() = liveDataForViewToObserve
-    fun sendServerRequest(){
+    fun sendServerRequest() {
         liveDataForViewToObserve.postValue(AppState.Loading(null))
-        retrofitImpl.getRetrofitImpl().getPictureOfTheDay(BuildConfig.NASA_API_KEY).enqueue(callback)
+        retrofitImpl.getRetrofitImpl().getPictureOfTheDay(BuildConfig.NASA_API_KEY)
+            .enqueue(callback)
     }
 
-    private val callback = object : Callback<PictureOfTheDayServerResponseData>{
+    private val callback = object : Callback<PictureOfTheDayServerResponseData> {
         override fun onResponse(
             call: Call<PictureOfTheDayServerResponseData>,
             response: Response<PictureOfTheDayServerResponseData>
         ) {
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
                 response.body()?.let {
                     liveDataForViewToObserve.postValue(AppState.Success(it))
                 }
-            }else{
+            } else {
                 //TODO HW
             }
         }

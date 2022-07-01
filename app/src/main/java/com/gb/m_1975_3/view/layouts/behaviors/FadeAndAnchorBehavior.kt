@@ -7,7 +7,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.appbar.AppBarLayout
 import kotlin.math.abs
 
-class FadeAndAnchorBehavior(context: Context, attr:AttributeSet?=null):CoordinatorLayout.Behavior<View>(context,attr) {
+class FadeAndAnchorBehavior(context: Context, attr: AttributeSet? = null) :
+    CoordinatorLayout.Behavior<View>(context, attr) {
 
     override fun layoutDependsOn(
         parent: CoordinatorLayout,
@@ -23,9 +24,9 @@ class FadeAndAnchorBehavior(context: Context, attr:AttributeSet?=null):Coordinat
         dependency: View
     ): Boolean {
 
-        if(dependency is AppBarLayout){
-            child.alpha = 1-abs(dependency.y*2/dependency.height.toFloat())
-            child.y = dependency.height.toFloat()+dependency.y
+        if (dependency is AppBarLayout) {
+            child.alpha = 1 - abs(dependency.y * 2 / dependency.height.toFloat())
+            child.y = dependency.height.toFloat() + dependency.y
         }
         return super.onDependentViewChanged(parent, child, dependency)
     }

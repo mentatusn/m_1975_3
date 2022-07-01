@@ -185,7 +185,10 @@ class PictureOfTheDayFragment : Fragment() {
                 }
 
                 var spannableStringBuilder = SpannableStringBuilder(spannableString)
-                binding.lifeHack.explanation.setText(spannableStringBuilder,TextView.BufferType.EDITABLE)
+                binding.lifeHack.explanation.setText(
+                    spannableStringBuilder,
+                    TextView.BufferType.EDITABLE
+                )
                 spannableStringBuilder = binding.lifeHack.explanation.text as SpannableStringBuilder
 
 
@@ -197,17 +200,23 @@ class PictureOfTheDayFragment : Fragment() {
                             R.color.colorAccent
                         )
                     ),
-                    0, 5, Spannable.SPAN_INCLUSIVE_EXCLUSIVE // никаких двусмысленностей, всё должно быть понятно сразу
+                    0,
+                    5,
+                    Spannable.SPAN_INCLUSIVE_EXCLUSIVE // никаких двусмысленностей, всё должно быть понятно сразу
                 )
                 for (i in spannableStringBuilder.indices) {
                     if (spannableStringBuilder[i] == 'o') {
-                        spannableStringBuilder.setSpan(ImageSpan(requireContext(), R.drawable.ic_earth), i, i + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                        spannableStringBuilder.setSpan(
+                            ImageSpan(
+                                requireContext(),
+                                R.drawable.ic_earth
+                            ), i, i + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                        )
                     }
                 }
 
 
-                spannableStringBuilder.insert(0,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-
+                spannableStringBuilder.insert(0, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
 
             }

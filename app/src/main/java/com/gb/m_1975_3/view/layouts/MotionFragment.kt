@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gb.m_1975_3.databinding.FragmentMotionStartBinding
 
-class MotionFragment: Fragment() {
+class MotionFragment : Fragment() {
     private var _binding: FragmentMotionStartBinding? = null
     private val binding: FragmentMotionStartBinding
         get() = _binding!!
@@ -19,14 +19,17 @@ class MotionFragment: Fragment() {
         _binding = FragmentMotionStartBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = MotionFragment()

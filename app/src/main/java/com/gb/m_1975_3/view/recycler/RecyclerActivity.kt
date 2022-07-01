@@ -31,15 +31,15 @@ class RecyclerActivity : AppCompatActivity() {
         location3D.third
 
         val data = arrayListOf(
-            Pair(Data(1,"Earth", type = TYPE_EARTH), false),
-            Pair(Data(2,"Earth", type = TYPE_EARTH), false),
-            Pair(Data(3,"Mars", "", type = TYPE_MARS), false),
-            Pair(Data(4,"Earth", type = TYPE_EARTH), false),
-            Pair(Data(5,"Earth", type = TYPE_EARTH), false),
-            Pair(Data(6,"Earth", type = TYPE_EARTH), false),
-            Pair(Data(7,"Mars", null, type = TYPE_MARS), false)
+            Pair(Data(1, "Earth", type = TYPE_EARTH), false),
+            Pair(Data(2, "Earth", type = TYPE_EARTH), false),
+            Pair(Data(3, "Mars", "", type = TYPE_MARS), false),
+            Pair(Data(4, "Earth", type = TYPE_EARTH), false),
+            Pair(Data(5, "Earth", type = TYPE_EARTH), false),
+            Pair(Data(6, "Earth", type = TYPE_EARTH), false),
+            Pair(Data(7, "Mars", null, type = TYPE_MARS), false)
         )
-        data.add(0, Pair(Data(0,"Заголовок", type = TYPE_HEADER), false))
+        data.add(0, Pair(Data(0, "Заголовок", type = TYPE_HEADER), false))
 
         adapter.setData(data)
 
@@ -76,7 +76,6 @@ class RecyclerActivity : AppCompatActivity() {
             )
         }
     }
-
 
 
 }
@@ -118,14 +117,14 @@ class ItemTouchHelperCallbackSettings(private val adapterCallback: ItemTouchHelp
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
             if (viewHolder is RecyclerActivityAdapter.MarsViewHolder)
-                (viewHolder as RecyclerActivityAdapter.MarsViewHolder).onItemSelected()
+                viewHolder.onItemSelected()
         }
         super.onSelectedChanged(viewHolder, actionState)
     }
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         if (viewHolder is RecyclerActivityAdapter.MarsViewHolder)
-            (viewHolder as RecyclerActivityAdapter.MarsViewHolder).onItemClear()
+            viewHolder.onItemClear()
         super.clearView(recyclerView, viewHolder)
     }
 

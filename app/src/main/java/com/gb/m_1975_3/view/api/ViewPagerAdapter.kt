@@ -6,7 +6,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 
 private const val ADAPTER_SIZE = 100
-class ViewPagerAdapter(private val fragmentManager: FragmentManager):FragmentStatePagerAdapter(fragmentManager) {
+
+class ViewPagerAdapter(private val fragmentManager: FragmentManager) :
+    FragmentStatePagerAdapter(fragmentManager) {
     //val fragments = arrayOf(MarsFragment(),SystemFragment(),EarthFragment())
     override fun getCount(): Int {
         //return fragments.size

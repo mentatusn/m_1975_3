@@ -17,7 +17,8 @@ class SplashActivity : AppCompatActivity() { //TODO HW single-activity пыта�
         setContentView(R.layout.activity_splash)
 
 
-        findViewById<ImageView>(R.id.image_view).animate().rotationBy(1080f).setDuration(4000L).start()
+        findViewById<ImageView>(R.id.image_view).animate().rotationBy(1080f).setDuration(4000L)
+            .start()
 
         Handler(mainLooper).postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
