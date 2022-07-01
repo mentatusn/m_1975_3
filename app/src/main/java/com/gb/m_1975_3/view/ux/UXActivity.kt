@@ -10,7 +10,7 @@ class UXActivity : AppCompatActivity() {
     lateinit var binding: ActivityUxBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.MyBlueTheme)
+        setTheme(R.style.DynamicColors)
         binding = ActivityUxBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -30,7 +30,7 @@ class UXActivity : AppCompatActivity() {
             true
         }
 
-        binding.bottomNavigationViewUX.selectedItemId = R.id.fragment_ux_text
+        binding.bottomNavigationViewUX.selectedItemId = R.id.fragment_ux_button
     }
 
     private fun navigateTo(fragment: Fragment){
