@@ -1,5 +1,6 @@
 package com.gb.m_1975_3.view.ux
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -17,7 +18,7 @@ class TutorialButtonUXFragment : Fragment() {
     private val binding: FragmentUxButtonBinding
         get() = _binding!!
 
-    companion object{
+    companion object {
         fun newInstance() = TutorialButtonUXFragment()
     }
 
@@ -25,17 +26,17 @@ class TutorialButtonUXFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*Handler(Looper.getMainLooper()).postDelayed({
-            show()
-        }, 500)*/
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (isAdded)// проверяем, не умер ли фрагент
+                show()
+        }, 500)
     }
 
     private fun show() {
-        if (isAdded)
         GuideView.Builder(requireContext())
             .setTitle("Guide Title Text")
             .setContentText("Guide Description Text\n .....Guide Description Text\n .....Guide Description Text .....")
-            //.setTargetView(binding.btnBad)
+            .setTargetView(binding.btnBad)
             .setDismissType(DismissType.outside) //optional - default dismissible by TargetView
             .build()
             .show()
