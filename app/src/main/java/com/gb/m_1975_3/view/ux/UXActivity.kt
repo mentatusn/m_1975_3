@@ -16,14 +16,14 @@ class UXActivity : AppCompatActivity() {
 
 
         binding.bottomNavigationViewUX.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.fragment_ux_text->{
+            when (it.itemId) {
+                R.id.fragment_ux_text -> {
                     navigateTo(TextUXFragment())
                 }
-                R.id.fragment_ux_button->{
+                R.id.fragment_ux_button -> {
                     navigateTo(ButtonUXFragment())
                 }
-                R.id.fragment_ux_tutorial->{
+                R.id.fragment_ux_tutorial -> {
                     navigateTo(TutorialButtonUXFragment.newInstance())
                 }
             }
@@ -33,8 +33,13 @@ class UXActivity : AppCompatActivity() {
         binding.bottomNavigationViewUX.selectedItemId = R.id.fragment_ux_button
     }
 
-    private fun navigateTo(fragment: Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+    private fun navigateTo(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().setCustomAnimations(
+            R.anim.slide_in,
+            R.anim.fade_out,
+            R.anim.fade_in,
+            R.anim.slide_out
+        ).replace(R.id.container, fragment).commit()
     }
 
 }
