@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setTheme(Parameters.getInstance().theme)
-        setTheme(R.style.MyBlueTheme)
+        setTheme(R.style.DynamicColors)
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
